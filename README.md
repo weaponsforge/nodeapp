@@ -126,11 +126,11 @@ The following notes describe how to install **docker** on CentOS 8 running on a 
 9. Test if the app can be called outside using **curl**, or load the website from a web browser.  
 `curl -i localhost:49160`
 10. Stop the running container/s.
-   - (stop 1) `docker container stop <CONTAINER_ID>`
-   - (stop all) `docker container stop $(docker container ls -aq)`
+	- (stop 1) `docker container stop <CONTAINER_ID>`
+	- (stop all) `docker container stop $(docker container ls -aq)`
 11. Remove a container. Note: The container should first be stopped before it is removed. 
-   - `docker container rm <CONTAINER_ID>`
-   - `docker container rm <CONTAINER_ID#1>, <CONTAINER_ID#2>,...`
+	- `docker container rm <CONTAINER_ID>`
+	- `docker container rm <CONTAINER_ID#1>, <CONTAINER_ID#2>,...`
 
 
 ## References
@@ -139,7 +139,8 @@ The following notes describe how to install **docker** on CentOS 8 running on a 
 [[2]](https://phoenixnap.com/kb/how-to-install-docker-on-centos-8) - install docker on centos 8  
 [[3]](https://docs.docker.com/engine/install/centos/) - official docker installation on centos  
 [[4]](https://github.com/nodejs/docker-node/blob/master/docs/BestPractices.md) - docker and nodejs best practices  
-[[5]](https://hub.docker.com/_/node/) - nodejs official docker images
+[[5]](https://hub.docker.com/_/node/) - nodejs official docker images  
+[[6]](https://trello.com/c/7WiCI60n) - trello notes
 
 @weaponsforge  
 20201130
