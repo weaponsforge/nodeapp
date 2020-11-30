@@ -7,7 +7,7 @@ The following notes describe how to install **docker** on CentOS 8 running on a 
 - [Prerequisites](#prerequisites)
 - [Docker Installation](#docker-installation)
 - [Docker Post Installation](#post-installation)
-- [Install Docker Compose (Optional)](#install-docker-compose-(optional))
+- [Install Docker Compose (Optional)](#install-docker-compose-optional)
 - [Dockerize a NodeJS Web App](#dockerize-a-nodejs-web-app)
 - [Run a NodeJS Web App Inside a Docker Container](#run-a-nodejs-web-app-inside-a-docker-container)
 - [Common Docker Commands](#common-docker-commands)
@@ -71,8 +71,6 @@ The following notes describe how to install **docker** on CentOS 8 running on a 
 
 
 ## Install Docker Compose (Optional)
-
-> Do the steps here as an alternative for the [**Run a NodeJS Web App Inside Docker Container**](#run-a-nodejs-web-app-inside-a-docker-container) section.
 
 1. Download and install the latest **docker-compose** from Github. Refer to the list of latest releases [here](https://github.com/docker/compose/releases).
 
