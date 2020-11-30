@@ -43,10 +43,10 @@ The following notes describe how to install **docker** on CentOS 8 running on a 
 ## Docker Post Installation
 
 1. Add your user to the docker group.  
-```
-sudo usermod -aG docker $USER
-id $USER
-```
+
+		sudo usermod -aG docker $USER
+		id $USER
+
 2. Disable firewalld on CentOS 8  
 `sudo systemctl disable firewalld`
 3. Reboot system.  
@@ -89,7 +89,7 @@ id $USER
 
 ## Run a NodeJS Web App Inside a Docker Container
 
-1. Clone this git repository, or create a working nodejs web app directory set-up for Docker.  
+1. Clone this git repository, or create a working [nodejs web app directory set-up for Docker](#dockerize-a-nodejs-web-app).  
 `git clone https://github.com/weaponsforge/nodeapp.git`
 2. **cd** into the directory.  
 `cd nodeapp`
@@ -97,14 +97,14 @@ id $USER
 `docker build -t nodeapp .`
 4. Confirm that the image is listed by docker.  
 `docker images`
-5. Run the image in detached mode.  
+5. Run the image in detached mode. The following command makes the container's local port **3000** accessible to the host machine as port **49160**.  
 `docker run -p 49160:3000 -d nodeapp`
 6. Print the output of your app.
    - Get the container id: `docker ps`
    - Print the app output: `docker logs <CONTAINER_ID>`
 7. Go inside the running container.  
 `docker exec -it <CONTAINER_ID> /bin/bash`
-8. View the port mapping from inside the container (3000) to your machine's port (49160).  
+8. Verify the port mapping from inside the container (3000) to your machine's port (49160).  
 `docker ps`
 9. Test if it can be called outside using **curl**, or load the website from a web browser.  
 `curl -i localhost:49160`
