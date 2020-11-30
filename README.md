@@ -67,8 +67,19 @@ The following notes describe how to install **docker** on CentOS 8 running on a 
 
 ## Dockerize a NodeJS Web App
 
-1. Create a basic express nodejs app. For reference, use the [**nodeapp**](https://github.com/weaponsforge/nodeapp) repository.
-2. Create a `Dockerfile` file inside the project repository.  
+1. Create a basic express nodejs app. For reference, use the [**nodeapp**](https://github.com/weaponsforge/nodeapp) repository. The demo project has a folder structure as follows:  
+
+		[+] nodeapp
+		  [+] app
+		     [+] public
+		         [-] index.html
+		     [-] server.js
+		  [-] Dockerfile
+		  [-] .dockerignore
+		  [-] package.json
+		  [-] package-lock.json
+
+2. Create a `Dockerfile` file inside the project repository with the following content.  
 
 		FROM node:12
 		# app directory
@@ -77,11 +88,11 @@ The following notes describe how to install **docker** on CentOS 8 running on a 
 		COPY package*.json ./
 		RUN npm install
 		# Bundle app source
-		COPY . .
+		COPY ./app ./app
 		EXPOSE 3000
-		CMD ["node", "main.js"]
+		CMD ["node", "app/server.js"]
 
-3. Create a `.dockerignore` file inside the project repository.  
+3. Create a `.dockerignore` file inside the project repository with the following content.  
 
 		node_modules
 		npm-debug.log
@@ -97,16 +108,22 @@ The following notes describe how to install **docker** on CentOS 8 running on a 
 `docker build -t nodeapp .`
 4. Confirm that the image is listed by docker.  
 `docker images`
-5. Run the image in detached mode. The following command makes the container's local port **3000** accessible to the host machine as port **49160**.  
+5. Run the image in detached mode using any of the (2) options. The 1st one is the most recommended option. 
+   - The following command maps the app's src directory from the host to the container's WORKDIR. This allows editing of the app's source files without needing to rebuild the nodeapp image.  
+
+			# docker run -it -v <APP_ROOT_DIR>:/<CONTAINER_WORKDIR>
+			docker run -it -v $(pwd):/usr/src/app -p 49160:3000 -d nodeapp
+
+	- The following command makes the container's local port **3000** accessible to the host machine as port **49160**.  
 `docker run -p 49160:3000 -d nodeapp`
 6. Print the output of your app.
    - Get the container id: `docker ps`
    - Print the app output: `docker logs <CONTAINER_ID>`
-7. Go inside the running container.  
+7. Go inside the running container from another terminal.  
 `docker exec -it <CONTAINER_ID> /bin/bash`
 8. Verify the port mapping from inside the container (3000) to your machine's port (49160).  
 `docker ps`
-9. Test if it can be called outside using **curl**, or load the website from a web browser.  
+9. Test if the app can be called outside using **curl**, or load the website from a web browser.  
 `curl -i localhost:49160`
 10. Stop the running container/s.
    - (stop 1) `docker container stop <CONTAINER_ID>`
