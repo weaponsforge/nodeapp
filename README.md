@@ -112,6 +112,8 @@ The following notes describe how to install **docker** on CentOS 8 running on a 
    - The following command maps the app's src directory from the host to the container's WORKDIR. This allows editing of the app's source files without needing to rebuild the nodeapp image.  
 
 			# docker run -it -v <APP_ROOT_DIR>:/<CONTAINER_WORKDIR>
+			# APP_ROOT_DIR=project's root dir on the HOST machine, i.e. /home/ubuntu/nodeapp
+			# CONTAINER_WORKDIR=WORKDIR defined in the Dockerfile, where the app's source codes will be deployed in the container
 			docker run -it -v $(pwd):/usr/src/app -p 49160:3000 -d nodeapp
 
 	- The following command makes the container's local port **3000** accessible to the host machine as port **49160**.  
