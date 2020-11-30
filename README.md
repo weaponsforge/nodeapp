@@ -9,6 +9,9 @@ The following notes describe how to install **docker** on CentOS 8 running on a 
 - [Docker Post Installation](#post-installation)
 - [Dockerize a NodeJS Web App](#dockerize-a-nodejs-web-app)
 - [Run a NodeJS Web App Inside a Docker Container](#run-a-nodejs-web-app-inside-a-docker-container)
+- [Common Docker Commands](#common-docker-commands)
+	- [Images]()
+	- [Containers]()
 - [References](#references)
 
 ## Prerequisites
@@ -20,25 +23,27 @@ The following notes describe how to install **docker** on CentOS 8 running on a 
 
 ## Docker Installation
 
-1. Add Docker CE yum repository using dnf command.  
+1. Update your system.  
+`sudo dnf update -y`
+2. Add Docker CE yum repository using dnf command.  
 `sudo dnf config-manager --add-repo=https://download.docker.com/linux/centos/docker-ce.repo`
-2. Build cache for Docker yum repository.  
+3. Build cache for Docker yum repository.  
 `sudo dnf makecache`
-3. Docker CE requires containerd.io-1.2.2-3 (or later) package, which is blocked in CentOS 8. Therefore, we have to use an earlier version of containerd.io package. Install docker-ce with an earlier version of containerd.io using following command.  
+4. Docker CE requires containerd.io-1.2.2-3 (or later) package, which is blocked in CentOS 8. Therefore, we have to use an earlier version of containerd.io package. Install docker-ce with an earlier version of containerd.io using following command.  
 `sudo dnf -y install --nobest docker-ce --alowerasing`
-4. Enable and start Docker service.  
+5. Enable and start Docker service.  
 `systemctl enable --now docker.service`
-5. Check status of Docker service.  
+6. Check status of Docker service.  
 `systemctl status docker.service`
-6. Check Docker version.  
+7. Check Docker version.  
 `docker version`
-7. Verify that docker runs.  
+8. Verify that docker runs.  
 `docker run hello-world`
-8. View the list of docker containers.  
+9. View the list of docker containers.  
 `docker container ls -a`
-9. Stop and remove a docker container.
+10. Stop and remove a docker container.
    - Get its `CONTAINER ID/s` from step #8.
-   - Run: `docker container rm <CONTAINER_ID>, <CONTAINER_ID_2>, ...`
+   - Run: `docker container rm <CONTAINER_ID> <CONTAINER_ID_2> ...`
 
 ## Docker Post Installation
 
@@ -132,8 +137,41 @@ The following notes describe how to install **docker** on CentOS 8 running on a 
 	- (stop all) `docker container stop $(docker container ls -aq)`
 11. Remove a container. Note: The container should first be stopped before it is removed. 
 	- `docker container rm <CONTAINER_ID>`
-	- `docker container rm <CONTAINER_ID#1>, <CONTAINER_ID#2>,...`
+	- `docker container rm <CONTAINER_ID#1> <CONTAINER_ID#2> ...`
 
+## Common Docker Commands
+
+### `Images`
+
+- **show the list of all installed docker images**  
+`docker images`
+- **delete docker image/s**  
+`docker image rm <IMG_NAME#1> <IMG_NAME#2> ...`
+
+
+### `Containers`
+
+- **show the list, status and CONTAINER ID of all installed docker containers**  
+`docker container ls -a`  
+- **show the list of active running containers**  
+`docker ps`
+- **create and run a docker container for an app** (with reference to a nodejs web app)  
+`docker run -it -v $(pwd):/usr/src/app -p 49160:3000 -d nodeapp`
+- **create and run a docker container for most apps**  
+	- NOTE: Appropriate Dockerfile is required.
+	- `docker run <APP_NAME>`
+- **stop a running container**
+	- get the target container's CONTAINER ID
+	- `docker container stop <CONTAINER_ID>`
+- **stop all running containers**  
+`docker container stop $(docker container ls -aq)`
+- **remove a docker container**
+	- first, stop the target container from running
+	- `docker container rm <CONTAINER_ID>`
+- **remove all docker containers**
+	- first, stop the target containers from running
+	- get the target containers' CONTAINER ID's
+	- `docker container rm <CONTAINER_ID#1> <CONTAINER_ID#2> ...)`
 
 ## References
 
